@@ -5,7 +5,7 @@ import java.util.Random;
 
 public final class MazeFactory {
 
-    public static void build(
+    public static Maze2D build(
             final int rowLength,
             final int columnWidth
     ) {
@@ -47,7 +47,7 @@ public final class MazeFactory {
                 maze
         );
 
-        printHtmlMaze(maze);
+        return maze;
     }
 
     private static void buildPaths(
@@ -226,7 +226,7 @@ public final class MazeFactory {
         }
     }
 
-    public static void printHtmlMaze(final Maze2D maze) {
+    public static void printHtmlMaze(final Maze2D maze, final HashSet<MazeNode2D> paths) {
         final String gridDimension = "20px";
         final String heightWidth = "height:" + gridDimension + ";width:" + gridDimension + ";";
 
@@ -242,6 +242,8 @@ public final class MazeFactory {
                     divs += "  <div style=\"" + heightWidth + "background-color: rgba(0, 255, 0, 1);\"></div>\n";
                 } else if (maze.end.x == row && maze.end.y == column) {
                     divs += "  <div style=\"" + heightWidth + "background-color: rgba(255, 0, 0, 1);\"></div>\n";
+                } else if (paths.contains(new MazeNode2D(row, column))) {
+                    divs += "  <div style=\"" + heightWidth + "background-color: rgba(0, 0, 255, 1);\"></div>\n";
                 } else if (maze.body[row][column]) {
                     divs += "  <div style=\"" + heightWidth + "background-color: rgba(255, 255, 255, 1);\"></div>\n";
                 } else {
